@@ -8,7 +8,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.2'
+//        classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath 'com.android.tools.build:gradle:3.4.3'
     }
 }
 
@@ -30,6 +31,11 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 19
     }
+}
+
+dependencies {
+    implementation 'com.qcloud.cos:quic:1.5.39'
+    implementation 'com.qcloud.cos:cos-android-nobeacon:5.9.12'
 }

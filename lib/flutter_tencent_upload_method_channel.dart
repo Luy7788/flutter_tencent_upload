@@ -9,8 +9,7 @@ class MethodChannelFlutterTencentUpload extends PlatformInterface {
   @visibleForTesting
   final methodChannel = const MethodChannel('flutter_tencent_upload');
 
-  final EventChannel eventChannel =
-      const EventChannel('flutter_ugc_upload_stream');
+  final EventChannel eventChannel = const EventChannel('flutter_tencent_upload_stream');
 
   MethodChannelFlutterTencentUpload() : super(token: _token);
 
@@ -38,8 +37,10 @@ class MethodChannelFlutterTencentUpload extends PlatformInterface {
   /// 获取上传进度流
   void onProgressResult() {
     _subscription = eventChannel.receiveBroadcastStream().listen((dynamic event) {
-      double value = event as double;
-      progress?.call(value);
+      debugPrint("eventChannel :$event");
+      if (event is int || event is double) {
+        progress?.call(event * 1.0);
+      }
     });
   }
 
@@ -53,7 +54,7 @@ class MethodChannelFlutterTencentUpload extends PlatformInterface {
   Future<Map?> uploadVideo(
     String token,
     String videoPath, {
-    String? coverPath = "",
+    String coverPath = "",
     UploadProgressCallback? progress,
     UploadSucCallback? sucCallback,
     UploadFailCallback? failCallback,
@@ -63,14 +64,21 @@ class MethodChannelFlutterTencentUpload extends PlatformInterface {
     arguments['token'] = token;
     arguments['videoPath'] = videoPath;
     arguments['coverPath'] = coverPath;
-    Map result = await methodChannel.invokeMethod('uploadVideo', arguments);
-    progress?.call(1);
-    progress = null;
-    if (sucCallback != null || failCallback != null) {
+    Map? result;
+    try {
+      onProgressResult();
+      result = await methodChannel.invokeMethod('uploadVideo', arguments);
+    } catch (e) {
+      debugPrint("methodChannel.invokeMethod('uploadVideo', arguments) e: $e");
+      failCallback?.call(-1, "上传失败");
+      return null;
+    }
+    if (result != null && (sucCallback != null || failCallback != null)) {
       int code = result["code"];
       String msg = result["msg"];
       Map? data = result["data"];
       if (code == 1 && data != null) {
+        progress?.call(1);
         String id = data["id"];
         String url = data["url"];
         String coverUrl = data["coverUrl"];
@@ -79,6 +87,7 @@ class MethodChannelFlutterTencentUpload extends PlatformInterface {
         failCallback?.call(code, msg);
       }
     }
+    progress = null;
     return result;
   }
 }

@@ -50,7 +50,9 @@ public class FlutterTencentUploadPlugin implements FlutterPlugin, MethodCallHand
         if (call.method.equals("uploadVideo")) {
             Map<String, String> videoInfo = (Map<String, String>) call.arguments;
             if (videoInfo != null) {
-                mEventSink.success(0);
+                if (mEventSink != null) {
+                    mEventSink.success(0.0);
+                }
                 String token = videoInfo.get("token");
                 String filePath = videoInfo.get("videoPath");
                 String coverPath = videoInfo.get("coverPath");
@@ -70,7 +72,8 @@ public class FlutterTencentUploadPlugin implements FlutterPlugin, MethodCallHand
 
                     @Override
                     public void onProgress(long uploadBytes, long totalBytes) {
-                        mEventSink.success(uploadBytes/totalBytes);
+                        double progress = 1.0 * uploadBytes / totalBytes;
+                        mEventSink.success(progress);
                     }
 
                     @Override

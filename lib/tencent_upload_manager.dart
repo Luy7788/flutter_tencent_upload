@@ -15,7 +15,7 @@ class TencentUploadManager {
   static Future<Map?> uploadVideo(
     String token,
     String videoPath, {
-    String? coverPath = "",
+    String coverPath = "",
     UploadProgressCallback? progress,
     UploadSucCallback? sucCallback,
     UploadFailCallback? failCallback,

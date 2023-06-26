@@ -70,7 +70,7 @@ class MethodChannelFlutterTencentUpload extends PlatformInterface {
       result = await methodChannel.invokeMethod('uploadVideo', arguments);
     } catch (e) {
       debugPrint("methodChannel.invokeMethod('uploadVideo', arguments) e: $e");
-      failCallback?.call(-1, "上传失败");
+      failCallback?.call(-1, "文件上传失败");
       return null;
     }
     if (result != null && (sucCallback != null || failCallback != null)) {
@@ -86,6 +86,8 @@ class MethodChannelFlutterTencentUpload extends PlatformInterface {
       } else {
         failCallback?.call(code, msg);
       }
+    } else {
+      failCallback?.call(-1, "文件上传失败！");
     }
     progress = null;
     return result;

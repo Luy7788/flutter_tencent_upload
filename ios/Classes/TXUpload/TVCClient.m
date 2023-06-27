@@ -565,8 +565,8 @@
     if (serverTS != 0 && nowTime - serverTS > 10*60 ) {
         credential.startDate = [NSDate dateWithTimeIntervalSince1970:serverTS];
     }
-//    credential.experationDate = [NSDate dateWithTimeIntervalSince1970:uploadContext.cugResult.tmpExpiredTime];
-    credential.expirationDate = [NSDate dateWithTimeIntervalSince1970:uploadContext.cugResult.tmpExpiredTime];
+    credential.experationDate = [NSDate dateWithTimeIntervalSince1970:uploadContext.cugResult.tmpExpiredTime];
+//    credential.expirationDate = [NSDate dateWithTimeIntervalSince1970:uploadContext.cugResult.tmpExpiredTime];
     _creator = [[QCloudAuthentationV5Creator alloc] initWithCredential:credential];
     
     QCloudServiceConfiguration* configuration = [QCloudServiceConfiguration new];

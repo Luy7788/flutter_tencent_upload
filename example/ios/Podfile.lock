@@ -18,12 +18,6 @@ PODS:
   - flutter_tencent_upload (0.0.1):
     - AFNetworking (>= 4.0.1)
     - Flutter
-    - QCloudQuic/Slim (>= 6.0.5)
-  - QCloudCore/WithoutMTA (6.2.3)
-  - QCloudCOSXML/Slim (6.2.3):
-    - QCloudCore/WithoutMTA (= 6.2.3)
-  - QCloudQuic/Slim (6.2.3):
-    - QCloudCOSXML/Slim (= 6.2.3)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
@@ -32,9 +26,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git:
     - AFNetworking
-    - QCloudCore
-    - QCloudCOSXML
-    - QCloudQuic
 
 EXTERNAL SOURCES:
   Flutter:
@@ -45,10 +36,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: 3bd23d814e976cd148d7d44c3ab78017b744cd58
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  flutter_tencent_upload: df709d35a8f81c0302b29042440fa3c4325791fd
-  QCloudCore: 448005f6c4515d869ee5b0e1faed5095f897f10a
-  QCloudCOSXML: f6b373f2de9282b3c0e1e0fcf8b42b5cf83f7827
-  QCloudQuic: 8ce5f48d759bb3f4fb865a5989683fd8e69a216f
+  flutter_tencent_upload: 3cfdaaa883600b8bafd8bd047b8e31fd49320f1b
 
 PODFILE CHECKSUM: 8f71dd07f77f0e79fa13ded4b4ce2bf9c200509a
 

@@ -17,7 +17,14 @@ A new Flutter project.
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
   s.dependency 'AFNetworking', '>= 4.0.1'
-  s.dependency 'QCloudQuic/Slim', '>= 6.0.5'
+#   s.dependency 'QCloudQuic/Slim', '>= 6.0.5'
+  s.vendored_framework = [
+      "COSSDK/QCloudCore.framework",
+      "COSSDK/QCloudCOSXML.framework"
+  ]
+  s.vendored_libraries = [
+      "COSSDK/libmtasdk.a",
+  ]
   s.platform = :ios, '9.0'
   s.static_framework = true
 

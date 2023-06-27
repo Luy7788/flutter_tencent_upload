@@ -65,9 +65,12 @@
  */
 - (void)onPublishProgress:(NSInteger)uploadBytes totalBytes: (NSInteger)totalBytes {
     if (_eventSink != nil){
-        _eventSink(@(uploadBytes/totalBytes));
+        double progress = uploadBytes*1.0/totalBytes;
+//        NSLog(@"uploadBytes:%zd, totalBytes:%zd, progress:%f", uploadBytes, totalBytes, progress);
+        _eventSink(@(progress));
     }
 }
+
 /**
  * 短视频发布完成
  */
@@ -105,7 +108,6 @@
 - (void)onPublishEvent:(NSDictionary*)evt {
     ;
 }
-
 
 
 @end

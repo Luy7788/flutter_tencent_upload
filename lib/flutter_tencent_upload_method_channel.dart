@@ -37,7 +37,7 @@ class MethodChannelFlutterTencentUpload extends PlatformInterface {
   /// 获取上传进度流
   void onProgressResult() {
     _subscription = eventChannel.receiveBroadcastStream().listen((dynamic event) {
-      debugPrint("eventChannel :$event");
+      debugPrint("获取上传进度流 eventChannel :$event");
       if (event is int || event is double) {
         progress?.call(event * 1.0);
       }

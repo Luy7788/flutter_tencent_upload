@@ -20,8 +20,6 @@ typedef NS_ENUM(NSInteger, TVCResult){
     TVC_ERR_INVALID_SIGNATURE = 1012,      //短视频上传签名为空
     TVC_ERR_INVALID_VIDEOPATH = 1013,      //视频路径为空
     TVC_ERR_USER_CANCLE = 1017,            //用户调用取消上传
-    TVC_ERR_UPLOAD_QUIC_FAILED = 1019,     //COS使用quic上传视频失败，转http上传
-    TVC_ERR_UPLOAD_SIGN_EXPIRED = 1020,    //签名过期
 };
 
 /*
@@ -33,10 +31,17 @@ typedef NS_ENUM(NSInteger, TXPublishEventCode)
     TVC_UPLOAD_EVENT_ID_COS     = 20001,    //UGC发布调用COS上传
     TVC_UPLOAD_EVENT_ID_FINISH  = 10002,    //UGC发布结束上传
     TVC_UPLOAD_EVENT_DAU        = 40001,    //短视频上传DAU上报
-    TVC_UPLOAD_EVENT_ID_REQUEST_VOD_DNS_RESULT            =   11001,          //vod http dns请求结果
-    TVC_UPLOAD_EVENT_ID_REQUEST_PREPARE_UPLOAD_RESULT     =   11002,          //PrepareUploadUGC请求结果
-    TVC_UPLOAD_EVENT_ID_DETECT_DOMAIN_RESULT              =   11003,          //检测最优园区结果(包含cos iplist)
+
 };
+
+@interface TVCConfig : NSObject
+@property (nonatomic, strong) NSString *signature;
+//超时时间，默认8秒
+@property (nonatomic, assign) NSTimeInterval timeoutInterval;
+@property (nonatomic, assign) BOOL enableHttps;
+@property (nonatomic, strong) NSString *userID;
+@property (nonatomic, assign) BOOL enableResume;
+@end
 
 @interface TVCUploadParam : NSObject
 //视频本地路径

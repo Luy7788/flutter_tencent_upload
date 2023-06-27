@@ -11,8 +11,6 @@
 #undef _MODULE_
 #define _MODULE_ "TXUGCPublishUtil"
 
-#define MD5_REGION_SIZE 2000
-
 #define degreesToRadians( degrees ) ( ( degrees ) / 180.0 * M_PI )
 
 @implementation TXUGCPublishUtil
@@ -281,75 +279,6 @@
     CGImageRef imgRef = [generate copyCGImageAtTime:time actualTime:nil error:&err];
     UIImage *image =  [[UIImage alloc] initWithCGImage:imgRef];
     return image;
-}
-
-/**
- 获取文件前部分数据，
- */
-+(NSData*)getMD5FileStart:(NSFileHandle*)handle withTotalSize:(long)size {
-    return [handle readDataOfLength:MD5_REGION_SIZE];
-}
-
-+(NSData*)getMD5FileMid:(NSFileHandle*)handle withTotalSize:(long)size {
-    // mid,总长度减去范围长度，除以2，就是文件中间MD5_REGION_SIZE个数据的开始索引
-    long midStart = (long) floor((size - MD5_REGION_SIZE) / 2.0);
-    [handle seekToFileOffset:midStart];
-    return [handle readDataToEndOfFile];
-}
-
-+(NSData*)getMD5FileEnd:(NSFileHandle*)handle withTotalSize:(long)size {
-    // last
-    long endStartPos = size - MD5_REGION_SIZE;
-    [handle seekToFileOffset:endStartPos];
-    return [handle readDataToEndOfFile];
-}
-
-+ (NSString *)getFileMD5StrFromPath:(NSString *)path {
-    NSFileHandle *handle = [NSFileHandle fileHandleForReadingAtPath:path];
-    long fileSize = [[[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil] fileSize];
-    if( handle== nil ) {
-        // 如果文件不存在
-        return @"";
-    }
-
-
-    CC_MD5_CTX md5;
-    CC_MD5_Init(&md5);
-    
-    long bufferCount = ceil(MD5_REGION_SIZE / (double)fileSize);
-    if(bufferCount <= 1) {
-        NSData *fileData = [self getMD5FileStart:handle withTotalSize:fileSize];
-        CC_MD5_Update(&md5, [fileData bytes], [fileData length]);
-    } else if(bufferCount == 2) {
-        // one
-        NSData *filePOneData = [self getMD5FileStart:handle withTotalSize:fileSize];
-        CC_MD5_Update(&md5, [filePOneData bytes], [filePOneData length]);
-        // two
-        NSData *filePTwoData = [self getMD5FileEnd:handle withTotalSize:fileSize];
-        CC_MD5_Update(&md5, [filePTwoData bytes], [filePTwoData length]);
-    } else {
-        // one
-        NSData *filePOneData = [self getMD5FileStart:handle withTotalSize:fileSize];
-        CC_MD5_Update(&md5, [filePOneData bytes], [filePOneData length]);
-        // mid,总长度减去范围长度，除以2，就是文件中间MD5_REGION_SIZE个数据的开始索引
-        NSData *filePTwoData = [self getMD5FileMid:handle withTotalSize:fileSize];
-        CC_MD5_Update(&md5, [filePTwoData bytes], [filePTwoData length]);
-        // last
-        NSData *filePLastData = [self getMD5FileEnd:handle withTotalSize:fileSize];
-        CC_MD5_Update(&md5, [filePLastData bytes], [filePLastData length]);
-    }
-
-    unsigned char digest[CC_MD5_DIGEST_LENGTH];
-    CC_MD5_Final(digest, &md5);
-    NSString* s = [NSString stringWithFormat: @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",                   digest[0], digest[1],
-                   digest[2], digest[3],
-                   digest[4], digest[5],
-                   digest[6], digest[7],
-                   digest[8], digest[9],
-                   digest[10], digest[11],
-                   digest[12], digest[13],
-                   digest[14], digest[15]];
-    return s;
 }
 
 @end

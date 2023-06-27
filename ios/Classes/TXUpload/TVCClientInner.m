@@ -65,7 +65,6 @@
         _isShouldRetry = NO;
         _resumeData = nil;
         _vodCmdRequestCount = 0;
-        _mainVodServerErrMsg = @"";
     }
     return self;
 }
@@ -107,21 +106,6 @@
         _retryCount = 0;
         _reporting = NO;
         _requestId = @"";
-    }
-    return self;
-}
-
-@end
-
-@implementation ResumeCacheData
-
-- (instancetype)init
-{
-    if (self = [super init]) {
-        self.resumeData = nil;
-        self.vodSessionKey = nil;
-        self.videoLastModTime = 0;
-        self.coverLastModTime = 0;
     }
     return self;
 }

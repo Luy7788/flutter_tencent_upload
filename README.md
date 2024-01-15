@@ -1,15 +1,35 @@
 # flutter_tencent_upload
 
-A new Flutter project.
+```
+class TencentUploadManager {
+  // static void init() {
+  //   MethodChannelFlutterTencentUpload.instance.init();
+  // }
 
-## Getting Started
-
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
-
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  ///上传视频
+  ///token 签名
+  ///videoPath 视频路径
+  ///coverPath 封面路径
+  ///progress 上传进度
+  ///sucCallback 成功回调
+  ///failCallback 失败回调
+  static Future<Map?> uploadVideo(
+    String token,
+    String videoPath, {
+    String coverPath = "",
+    UploadProgressCallback? progress,
+    UploadSucCallback? sucCallback,
+    UploadFailCallback? failCallback,
+  }) {
+    return MethodChannelFlutterTencentUpload.instance.uploadVideo(
+      token,
+      videoPath,
+      coverPath: coverPath,
+      progress: progress,
+      sucCallback: sucCallback,
+      failCallback: failCallback,
+    );
+  }
+}
+```
 

@@ -111,6 +111,7 @@ public class FlutterTencentUploadPlugin implements FlutterPlugin, MethodCallHand
         param.videoPath = mVideoPath;
         // 录制生成的视频首帧预览图，ITXVideoRecordListener 的 onRecordComplete 回调中可以获取
         param.coverPath = mCoverPath;
+        param.enableHttps = true;
         mVideoPublish.publishVideo(param);
         mVideoPublish.setListener(new TXUGCPublishTypeDef.ITXVideoPublishListener() {
             @Override

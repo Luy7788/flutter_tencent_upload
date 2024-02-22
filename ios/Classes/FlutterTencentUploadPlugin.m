@@ -37,6 +37,7 @@
                 param.signature = token;
                 param.videoPath = videoPath;//[videoPath stringByReplacingOccurrencesOfString:@"file://" withString:@""];
                 param.coverPath = coverPath;
+                param.enableHTTPS = YES;
                 [publish publishVideo:param];
             } @catch (NSException *exception) {
                 NSLog(@"FlutterTencentUploadPlugin exception1: %@",exception);
